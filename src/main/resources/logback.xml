@@ -1,0 +1,18 @@
+<!-- // this simply extends spring-boots default logback configuration -->
+
+<configuration>
+	<!-- this imports spring-boot default configuration -->
+    <include resource="org/springframework/boot/logging/logback/basic.xml"/>
+	
+	<!-- special handling of tyhmeleaf logger: -->
+	<!-- <logger name="org.thymeleaf" level="INFO"> -->
+	<!--     <appender-ref ref="CONSOLE" />         -->
+	<!-- </logger>                                  -->
+	<logger name="org.hibernate.type" level="ALL" />
+    <logger name="org.hibernate" level="DEBUG" />
+    
+	<!-- the global log level and appender config -->
+	<root level="INFO">
+	    <appender-ref ref="CONSOLE" />
+	</root>
+</configuration>
