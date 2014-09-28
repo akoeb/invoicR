@@ -17,7 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity(name = "projects")
-public class Project {
+public class ProjectPO {
 
     @Id
     @GeneratedValue
@@ -28,7 +28,7 @@ public class Project {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false)
-    private Customer customer;
+    private CustomerPO customer;
 
     /**
      * @return the id
@@ -78,7 +78,7 @@ public class Project {
     /**
      * @return the customer
      */
-    public Customer getCustomer() {
+    public CustomerPO getCustomer() {
         return customer;
     }
 
@@ -89,7 +89,7 @@ public class Project {
      *            This method is protected because addition of customers should
      *            be done through the customer entity
      */
-    protected void setCustomer(Customer customer) {
+    protected void setCustomer(CustomerPO customer) {
         this.customer = customer;
     }
 

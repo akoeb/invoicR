@@ -3,6 +3,8 @@
  */
 package me.koeb.invoiceR.domain;
 
+import me.koeb.invoiceR.TO.CustomerTO;
+
 /**
  * @author Alexander Köb
  *
@@ -18,6 +20,26 @@ public class Customer {
     private String state;
     private String email;
     private String contactName;
+
+    /**
+     * regular empty constructor
+     */
+    public Customer() {
+    }
+
+    public Customer(CustomerTO customerTO) {
+        this.id = customerTO.getId();
+        this.name = customerTO.getName();
+        this.addressLine1 = customerTO.getAddressLine1();
+        this.addressLine2 = customerTO.getAddressLine2();
+        this.city = customerTO.getCity();
+        this.zip = customerTO.getZip();
+        this.country = customerTO.getCountry();
+        this.state = customerTO.getState();
+        this.email = customerTO.getEmail();
+        this.contactName = customerTO.getContactName();
+
+    }
 
     /**
      * @return the id

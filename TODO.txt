@@ -2,7 +2,14 @@
 * customer
 ** id
 ** name
-** address
+** email
+** address line 1
+** address line 2
+** zip
+** city
+** country
+** state
+
 
 * project
 ** id

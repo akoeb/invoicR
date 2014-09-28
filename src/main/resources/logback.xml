@@ -8,8 +8,8 @@
 	<!-- <logger name="org.thymeleaf" level="INFO"> -->
 	<!--     <appender-ref ref="CONSOLE" />         -->
 	<!-- </logger>                                  -->
-	<logger name="org.hibernate.type" level="ALL" />
-    <logger name="org.hibernate" level="DEBUG" />
+	<!--  logger name="org.hibernate.type" level="ALL" / -->
+    <!--  logger name="org.hibernate" level="DEBUG" /  -->
     
 	<!-- the global log level and appender config -->
 	<root level="INFO">

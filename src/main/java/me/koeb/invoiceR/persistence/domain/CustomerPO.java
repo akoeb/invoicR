@@ -16,8 +16,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import me.koeb.invoiceR.TO.CustomerTO;
+
 @Entity(name = "customers")
-public class Customer {
+public class CustomerPO {
 
     @Id
     @GeneratedValue
@@ -34,7 +36,32 @@ public class Customer {
     private String contactName;
 
     @OneToMany(mappedBy = "customer", orphanRemoval = true)
-    private Set<Project> projects = new HashSet<Project>();
+    private Set<ProjectPO> projects = new HashSet<ProjectPO>();
+
+    // two constructors, an empty one and one from a transfer object:
+
+    /**
+     * 
+     */
+    public CustomerPO() {
+    }
+
+    /**
+     * @param customerTO
+     */
+    public CustomerPO(CustomerTO customerTO) {
+        super();
+        this.id = customerTO.getId();
+        this.name = customerTO.getName();
+        this.addressLine1 = customerTO.getAddressLine1();
+        this.addressLine2 = customerTO.getAddressLine2();
+        this.city = customerTO.getCity();
+        this.zip = customerTO.getZip();
+        this.country = customerTO.getCountry();
+        this.state = customerTO.getState();
+        this.email = customerTO.getEmail();
+        this.contactName = customerTO.getContactName();
+    }
 
     /**
      * @return the id
@@ -189,7 +216,7 @@ public class Customer {
     /**
      * @return the projects
      */
-    public Set<Project> getProjects() {
+    public Set<ProjectPO> getProjects() {
         return projects;
     }
 
@@ -197,15 +224,15 @@ public class Customer {
      * @param projects
      *            the projects to set
      */
-    public void setProjects(Set<Project> projects) {
+    public void setProjects(Set<ProjectPO> projects) {
         this.projects = projects;
     }
 
-    public boolean addProject(Project project) {
+    public boolean addProject(ProjectPO project) {
         boolean retval = false;
         project.setCustomer(this);
         if (this.projects == null) {
-            this.projects = new HashSet<Project>();
+            this.projects = new HashSet<ProjectPO>();
         }
         if (!this.projects.contains(project)) {
             retval = this.projects.add(project);
@@ -213,7 +240,7 @@ public class Customer {
         return retval;
     }
 
-    public boolean deleteProject(Project project) {
+    public boolean deleteProject(ProjectPO project) {
         boolean retval = false;
         if (this.projects != null) {
             if (this.projects.contains(project)) {

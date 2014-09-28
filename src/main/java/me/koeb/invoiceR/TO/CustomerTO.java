@@ -1,13 +1,19 @@
 /**
  * 
  */
-package me.koeb.invoiceR.events;
+package me.koeb.invoiceR.TO;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import me.koeb.invoiceR.persistence.domain.CustomerPO;
 
 /**
  * @author Alexander Köb
  *
  */
-public class RequestCreateCustomerEvent {
+public class CustomerTO {
+    private int id;
     private String name;
     private String addressLine1;
     private String addressLine2;
@@ -17,6 +23,33 @@ public class RequestCreateCustomerEvent {
     private String state;
     private String email;
     private String contactName;
+    private Set<ProjectTO> projects = new HashSet<ProjectTO>();
+
+    // two constructors, one empty and one for constructing the
+    // transfer object from an persistence object
+    public CustomerTO() {
+    }
+
+    public CustomerTO(CustomerPO customer) {
+        this.id = customer.getId();
+        this.name = customer.getName();
+        this.addressLine1 = customer.getAddressLine1();
+        this.addressLine2 = customer.getAddressLine2();
+        this.city = customer.getCity();
+        this.zip = customer.getZip();
+        this.country = customer.getCountry();
+        this.state = customer.getState();
+        this.email = customer.getEmail();
+        this.contactName = customer.getContactName();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     /**
      * @return the name
@@ -151,6 +184,21 @@ public class RequestCreateCustomerEvent {
      */
     public void setContactName(String contactName) {
         this.contactName = contactName;
+    }
+
+    /**
+     * @return the projects
+     */
+    public Set<ProjectTO> getProjects() {
+        return projects;
+    }
+
+    /**
+     * @param projects
+     *            the projects to set
+     */
+    public void setProjects(Set<ProjectTO> projects) {
+        this.projects = projects;
     }
 
 }

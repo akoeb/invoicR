@@ -1,17 +1,18 @@
 /**
  * 
  */
-package me.koeb.invoiceR.domain;
+package me.koeb.invoiceR.TO;
+
 
 /**
  * @author Alexander Köb
  *
  */
-public class Project {
+public class ProjectTO {
     private int id;
-    private Customer customer;
+    private CustomerTO customer;
     private String projectName;
-    private double hourlyRate;
+    private float hourlyRate;
 
     /**
      * @return the id
@@ -31,7 +32,7 @@ public class Project {
     /**
      * @return the customer
      */
-    public Customer getCustomer() {
+    public CustomerTO getCustomer() {
         return customer;
     }
 
@@ -39,7 +40,7 @@ public class Project {
      * @param customer
      *            the customer to set
      */
-    public void setCustomer(Customer customer) {
+    public void setCustomer(CustomerTO customer) {
         this.customer = customer;
     }
 
@@ -61,16 +62,16 @@ public class Project {
     /**
      * @return the hourlyRate
      */
-    public double getHourlyRate() {
+    public float getHourlyRate() {
         return hourlyRate;
     }
 
     /**
-     * @param d
+     * @param hourlyRate
      *            the hourlyRate to set
      */
-    public void setHourlyRate(double d) {
-        this.hourlyRate = d;
+    public void setHourlyRate(float hourlyRate) {
+        this.hourlyRate = hourlyRate;
     }
 
 }

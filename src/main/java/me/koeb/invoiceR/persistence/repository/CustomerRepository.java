@@ -8,10 +8,10 @@ package me.koeb.invoiceR.persistence.repository;
  *
  */
 
-import me.koeb.invoiceR.persistence.domain.Customer;
+import me.koeb.invoiceR.persistence.domain.CustomerPO;
 
 import org.springframework.data.repository.CrudRepository;
 
-public interface CustomerRepository extends CrudRepository<Customer, Integer> {
-    Customer findById(int Id);
+public interface CustomerRepository extends CrudRepository<CustomerPO, Integer> {
+    CustomerPO findById(int Id);
 }

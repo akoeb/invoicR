@@ -10,7 +10,7 @@ package me.koeb.invoiceR.persistence.integration;
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
 import me.koeb.invoiceR.config.JPAConfiguration;
-import me.koeb.invoiceR.persistence.domain.Customer;
+import me.koeb.invoiceR.persistence.domain.CustomerPO;
 import me.koeb.invoiceR.persistence.repository.CustomerRepository;
 
 import org.junit.Test;
@@ -32,7 +32,7 @@ public class CustomerRepositoryIntegrationTests {
     @Test
     public void thatItemIsInsertedIntoRepoWorks() throws Exception {
 
-        Customer customer = new Customer();
+        CustomerPO customer = new CustomerPO();
 
         String name = "customer name";
         String contactName = "contact name";
@@ -56,7 +56,7 @@ public class CustomerRepositoryIntegrationTests {
 
         customerRepository.save(customer);
         int id = customer.getId();
-        Customer retrievedCustomer = customerRepository.findById(id);
+        CustomerPO retrievedCustomer = customerRepository.findById(id);
 
         assertNotNull(retrievedCustomer);
         assertEquals(1, customerRepository.count());

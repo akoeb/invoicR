@@ -8,10 +8,10 @@ package me.koeb.invoiceR.persistence.repository;
  *
  */
 
-import me.koeb.invoiceR.persistence.domain.Project;
+import me.koeb.invoiceR.persistence.domain.ProjectPO;
 
 import org.springframework.data.repository.CrudRepository;
 
-public interface ProjectRepository extends CrudRepository<Project, Integer> {
-    Project findById(int Id);
+public interface ProjectRepository extends CrudRepository<ProjectPO, Integer> {
+    ProjectPO findById(int Id);
 }

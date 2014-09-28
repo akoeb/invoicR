@@ -47,7 +47,7 @@
             <foreignObject x="0" y="0" width="738" height="492" p:name="htmlObject" id="c9bd59eec0a743bc85508c23ff9cda69" style="font-family: &quot;Liberation Sans&quot;,Arial,sans-serif; font-size: 13px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(0, 0, 0); fill-opacity: 1;">
                 <html:div xmlns:html="http://www.w3.org/1999/xhtml" style="box-sizing: border-box; overflow: hidden; position: relative; width: 738px; height: 492px;" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" p:name="div" id="5cc412058a9b438087b9c88e0fab6a11">
                     <tabbox flex="1" style="pointer-events: none; margin: 0px ! important; width: 738px; height: 492px; font-family: &quot;Liberation Sans&quot;,Arial,sans-serif; font-size: 13px; font-weight: normal; font-style: normal; text-decoration: none; color: rgb(0, 0, 0); opacity: 1;" p:name="tabbox" id="bb1bfcfb8c914bc3a4e967111d09c617" width="738" height="492" disabled="false" selectedIndex="0">
-                      <tabs p:name="tabs" id="b25484d2c0a34237b73e6a8d2759eb7d" orient="horizontal" value=""><tab label="Projects" selected="true"/><tab label="Customers" selected="false"/><tab label="Invoices" selected="false"/></tabs>
+                      <tabs p:name="tabs" id="b25484d2c0a34237b73e6a8d2759eb7d" orient="horizontal" value=""><tab label="Projects" selected="true" first-tab="true"/><tab label="Customers" selected="false" afterselected="true"/><tab label="Invoices" selected="false" last-tab="true"/></tabs>
                       <tabpanels flex="1" selectedIndex="0">
                         <tabpanel/>
                       </tabpanels>

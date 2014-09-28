@@ -14,7 +14,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-public class SiteIntegrationTest {
+public class SiteControllerIntegrationTest {
 
     MockMvc mockMvc;
 

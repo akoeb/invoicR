@@ -16,8 +16,8 @@ import static org.junit.Assert.assertTrue;
 import java.util.Set;
 
 import me.koeb.invoiceR.config.JPAConfiguration;
-import me.koeb.invoiceR.persistence.domain.Customer;
-import me.koeb.invoiceR.persistence.domain.Project;
+import me.koeb.invoiceR.persistence.domain.CustomerPO;
+import me.koeb.invoiceR.persistence.domain.ProjectPO;
 import me.koeb.invoiceR.persistence.repository.CustomerRepository;
 import me.koeb.invoiceR.persistence.repository.ProjectRepository;
 
@@ -58,14 +58,14 @@ public class ProjectRepositoryIntegrationTests {
         String customerName = "customer name";
         // HashSet<Project> projectSet = new HashSet<Project>();
 
-        Customer customer = new Customer();
+        CustomerPO customer = new CustomerPO();
         customer.setName(customerName);
         customerRepository.save(customer);
         int customerID = customer.getId();
         assertTrue(customerID > 0);
 
         // just to make sure the customer persistence works as well:
-        Customer retrievedCustomer = customerRepository.findById(customerID);
+        CustomerPO retrievedCustomer = customerRepository.findById(customerID);
         assertNotNull(retrievedCustomer);
         assertEquals(1, customerRepository.count());
 
@@ -74,7 +74,7 @@ public class ProjectRepositoryIntegrationTests {
 
         logger.info("\nSTARTING WITH PROJECT 1\n");
 
-        Project project1 = new Project();
+        ProjectPO project1 = new ProjectPO();
         project1.setName(projectName1);
         project1.setHourlyRate(hourlyRate1);
         customer.addProject(project1);
@@ -89,7 +89,7 @@ public class ProjectRepositoryIntegrationTests {
         assertEquals(1, projectRepository.count());
         assertEquals(1, customerRepository.count());
 
-        Project retrievedProject1 = projectRepository.findById(projectId1);
+        ProjectPO retrievedProject1 = projectRepository.findById(projectId1);
         assertNotNull(retrievedProject1);
 
         assertEquals(retrievedProject1.getName(), projectName1);
@@ -98,7 +98,7 @@ public class ProjectRepositoryIntegrationTests {
 
         retrievedCustomer = customerRepository.findById(customerID);
 
-        Set<Project> projectList = retrievedCustomer.getProjects();
+        Set<ProjectPO> projectList = retrievedCustomer.getProjects();
         assertNotNull(projectList);
         assertEquals(1, projectList.size());
         assertTrue(projectList.contains(project1));
@@ -106,7 +106,7 @@ public class ProjectRepositoryIntegrationTests {
         // *********************************** //
         // Project 2
 
-        Project project2 = new Project();
+        ProjectPO project2 = new ProjectPO();
         project2.setName(projectName2);
         project2.setHourlyRate(hourlyRate2);
         customer.addProject(project2);
@@ -118,7 +118,7 @@ public class ProjectRepositoryIntegrationTests {
         assertEquals(2, projectRepository.count());
         assertEquals(1, customerRepository.count());
 
-        Project retrievedProject2 = projectRepository.findById(projectId2);
+        ProjectPO retrievedProject2 = projectRepository.findById(projectId2);
 
         assertNotNull(retrievedProject2);
         assertEquals(projectName2, retrievedProject2.getName());
