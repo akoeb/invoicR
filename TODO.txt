@@ -1,8 +1,6 @@
-= ENTITIES & ATTRIBUTES =
-* customer
+#ENTITIES & ATTRIBUTES#
+* address
 ** id
-** name
-** email
 ** address line 1
 ** address line 2
 ** zip
@@ -10,18 +8,26 @@
 ** country
 ** state
 
+* customer
+** id
+** name
+** email
+** address_id
+** vat_id
 
 * project
 ** id
 ** customer_id
 ** name
-** hourly rate
+** status
 
-* timeslot 
+* expense
 ** id
 ** project_id
-** start time
-** end time
+** start datetime
+** end datetime
+** summation_type (hours, events)
+** name_on_invoice
 ** notes
 (CONSTRAINT: only one timslot can be open per project, open means: has start date, but no end date)
 
@@ -33,68 +39,71 @@
 ** calculated invoice total
 ** period start date
 ** period end date
+** payment_date
 ** payment status
 ** invoice pdf file path
 ** timesheet pdf file path
 
-* additional invoice items
+* invoice items
 ** id
-** project id
 ** invoice id
-** datettime
-** name
+** order_no 
 ** description
-** value
+** amount
+** single price
 ** VAT rate
+** net value
+
+* invoice historic data
+** invoice_id
+** sender_address line 1
+** sender_address line 2
+** sender_zip
+** sender_city
+** sender_country
+** sender_state
+** sender_vat_id
+** sender_email
+** recipient_address line 1
+** recipient_address line 2
+** recipient_zip
+** recipient_city
+** recipient_country
+** recipient_state
+** recipient_vat_id
+** recipient_email
+** project_name
 
 
 
-
-= EVENTS  & WROKFLOWS =
+#EVENTS  & WORKFLOWS#
 * Index: HTML frame with tabs for projects and customers, projects is default
-* CRUD customer: REST to /customer
-* CRUD project:  REST to /project
-* CRUD timeslot: REST to /timeslot
-* CRUD invoice item: REST to /invoiceItem
+* CRUD customer: REST to /customers
+* CRUD project:  REST to /projects
+* CRUD expense: REST to /expenses
 * show project tab: list projects event => result in sidebar, trigger show project event with latest project by default, trigger project details for this one
 * show project: project details event  => result in content table, project name in header, link to customer of this project
-* project details: return project details plus n timeslots of a given project, ordered by date desc. if an open timeslot is available, show the "stop work" button
+* project details: return project details plus n expenses of a given project, ordered by date desc. if an open expense is available, show the "stop work" button, otherwise: "start work"
 * show customer tab: list customers event => result in sidebar, customer with latest project is default, trigger customer detail for this one
-* show customer: customer details event => result in content of customer tab, including list of all rpojects for this customer
+* show customer: customer details event => result in content of customer tab, including list of all projects for this customer
 * customer details event: customer details plus table of all projects for this customer
 * onclick on projects sidebar: project details event for clicked project
 * onclick on customer sidebar: customer detail for given customer
 
 
 * work on project: begin time track
-  => a new timeslot is started, make sure only one timeslot per project is open (start time  set, end time not)
+  => a new expense with summation type "hours" is started, make no other expenses of that type are open
 * work on project: end time track
-  => the only unfinished timeslot is closed (set end time, set notes)
-* create invoice over defined invoicing period, triggered automatically on invoicing period change
-  => trigger create timesheet event
-  => calculate total time worked on a project in invoicing period: add time differences of all timeslots of that project
-  => multiply total time with hourly rate
-  => add other invoice items if there are, set their invoice id fields then
-  => calculate invoice date, due date
+  => the only unfinished expense is closed (set end time, set notes)
+* create invoice over defined invoicing period, triggered automatically on invoicing period change (needs scheduler)
+  => create new invoice and historic_invoice_data
+  => sum up all hourly expenses and create invoice_item (validate expenses, error if expenses are open or too much)
+  => sum up all events expenses and create invoice_item
   => set payment status to unpaid
-  => save all data for the invoice
-  => create pdf from this data
-* create timesheet, triggered automatically by create invoice
-  => verify that all timeslots are closed (have start and end time)
-  => collect all timeslots for one invoicing period
-  => create pdf from this data
+  => create invoice pdf and timesheet pdf from this data
 * mark invoice paid
   => save payment date to invoice
   => set payment status to paid
-
-* list all projects
-  => show list of all projects
-* list customers
-  => show list of all customers
-
-* list time spent in one timeframe
-  => calculate total time in one project in one time interval
-
 
 = URL mapping and controlers =
 * siteControler
@@ -102,32 +111,31 @@
 
 
 * controler customer:
-** GET /customer : list all customers
-** GET /customer/{n} get details of customer {n}, including list of projects
-** POST /customer create a new customer
-** PUT /customer/{n} update details for customer {n}
+** GET /customers : list all customers
+** GET /customers/{n} get details of customer {n}, including list of projects
+** POST /customers create a new customer
+** PUT /customers/{n} update details for customer {n}
+** DELETE /customers/{n} delete customer {n}
 
 * controler project:
-** GET /project : list all projects: 
-    {
-        project_id: "Project Name",
-        ...
-    }
-** GET /project/{n} get details of project {n}, including list of timeslots
-** POST /project create a new project
-** PUT /project/{n} update details for project {n}
+** GET /projects : list all projects: 
+** GET /projects/{n} get details of project {n}, including list of timeslots
+** POST /projects create a new project
+** PUT /projects/{n} update details for project {n}
+** DELETE /projects/{n} delete project {n}
 
-* controler timeslot 
-** GET /timeslot : list all timeslots
-** GET /timeslot/{n} get details of timeslot {n}
-** POST /timeslot create a new timeslot
-** PUT /timeslot/{n} update details for timeslot {n}
-** DELETE /timeslot/{n} delete timeslot
+* controler expense
+** GET /projects/{n}/expenses : list all timeslots
+** GET /projects/{n}/expenses/{m} get details of timeslot {m} in project{n}
+** POST /projects/{n}/expenses create a new expense in project{n}
+** PUT /projects/{n}/expenses/{m} update details for timeslot {m} in project{n}
+** DELETE /projects/{n}/timeslot/{m} delete expense {m} in project{n}
 
 * controler invoices:
 ** GET /invoice: list all invoices, ordered by invoice date desc
 ** GET /invoice/{n}: get invoice details for invoice number {n} including list of timeslots and list of invoice items
 ** PUT /invoice/{n} update invoice, eg for payment status change
+
 
 * controler invoice_item
 ** GET /invoiceItem/{n} show details of specific invoice item
